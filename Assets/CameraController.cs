@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera camera;
+    public Camera cameraObject;
 
     public Vector3 center;
 
@@ -10,24 +10,24 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        RotateCamera();
+        if (Input.GetMouseButton(1))
+        {
+            RotateCamera();
+        }
     }
 
     void RotateCamera()
     {
-        if (Input.GetMouseButton(0))
-        {
-            camera.transform.RotateAround(
-                center,
-                camera.transform.up,
-                Input.GetAxis("Mouse X") * speed.x
-            );
+        cameraObject.transform.RotateAround(
+           center,
+           cameraObject.transform.up,
+           Input.GetAxis("Mouse X") * speed.x
+        );
 
-            camera.transform.RotateAround(
-                center,
-                camera.transform.right,
-                Input.GetAxis("Mouse Y") * speed.y
-            );
-        }
+        cameraObject.transform.RotateAround(
+            center,
+            cameraObject.transform.right,
+            Input.GetAxis("Mouse Y") * speed.y
+        );
     }
 }
