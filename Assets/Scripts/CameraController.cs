@@ -2,16 +2,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    Camera cameraObject;
-    Transform center;
-    Transform target;
-
-    void Awake()
-    {
-        cameraObject = GetComponentInChildren<Camera>();
-        center = GetComponent<Transform>();
-        target = center;
-    }
+    public Camera cameraObject;
+    public GameObject target;
 
     void Update()
     {
@@ -28,19 +20,19 @@ public class CameraController : MonoBehaviour
             RaycastHit raycastHit;
             if (Physics.Raycast(ray, out raycastHit, Camera.main.farClipPlane))
                 if (raycastHit.transform.gameObject)
-                    target = raycastHit.transform;
+                    target = raycastHit.transform.gameObject;
         }
     }
 
     void CenterTarget()
     {
-        center.transform.position = Vector3.Slerp(
-            center.position,
-            target.position,
+        this.transform.position = Vector3.Slerp(
+            transform.position,
+            target.transform.position,
             Time.deltaTime * 10
         );
 
-        cameraObject.transform.LookAt(center.position);
+        cameraObject.transform.LookAt(transform.position);
     }
 
     void RotateWithMouse()
@@ -48,13 +40,13 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             cameraObject.transform.RotateAround(
-                center.position,
+                transform.position,
                 cameraObject.transform.up,
                 Input.GetAxis("Mouse X") * 10
             );
 
             cameraObject.transform.RotateAround(
-                center.position,
+                transform.position,
                 cameraObject.transform.right,
                 Input.GetAxis("Mouse Y") * -10
             );
