@@ -1,7 +1,10 @@
 {
   "editor.formatOnSave": true,
   "csharp.format.enable": true,
+  "csharp.inlayHints.parameters.forIndexerParameters": true,
+  "csharp.inlayHints.parameters.forLiteralParameters": true,
   "[csharp]": {
     "editor.defaultFormatter": "csharpier.csharpier-vscode"
-  }
+  },
+  "omnisharp.useModernNet": false,
 }
