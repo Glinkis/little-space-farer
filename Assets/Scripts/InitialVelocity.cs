@@ -5,7 +5,7 @@ public class IntialVelocity : MonoBehaviour
     public Vector3 velocity;
     public Vector3 angularVelocity;
 
-    void Start()
+    void Awake()
     {
         Rigidbody rigidbody = GetComponent<Rigidbody>();
 
