@@ -2,31 +2,60 @@ using UnityEngine;
 
 public class GravityController : MonoBehaviour
 {
+    public float timeStep = 0.01f;
+
+    void Awake()
+    {
+        Time.fixedDeltaTime = timeStep;
+    }
+
     void FixedUpdate()
     {
-        Rigidbody[] rigidbodies = Object.FindObjectsByType<Rigidbody>(0);
+        var bodies = FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
 
-        foreach (Rigidbody current in rigidbodies)
+        foreach (var current in bodies)
         {
-            foreach (Rigidbody other in rigidbodies)
+            Vector3 acceleration = Vector3.zero;
+
+            foreach (var other in bodies)
             {
-                if (current == other)
-                    continue;
-
-                Vector3 relativePosition = other.position - current.position;
-                float distance = relativePosition.magnitude;
-
-                if (distance == 0)
-                    continue;
-
-                float magnitude = (current.mass * other.mass) / (distance * distance);
-                Vector3 force = 9.82f * magnitude * relativePosition.normalized;
-
-                current.AddForce(force);
-
-                Debug.DrawLine(current.position, current.position + force, Color.red);
-                Debug.DrawLine(current.position, current.position + current.velocity, Color.blue);
+                acceleration += CalculateAcceleration(
+                    new VirtualBody(current),
+                    new VirtualBody(other)
+                );
             }
+
+            current.UpdateVelocity(acceleration, timeStep);
         }
+
+        foreach (var current in bodies)
+        {
+            current.UpdatePosition(timeStep);
+        }
+    }
+
+    public static Vector3 CalculateAcceleration(VirtualBody current, VirtualBody other)
+    {
+        // If the current body is frozen, it won't move.
+        if (current.constraints == RigidbodyConstraints.FreezePosition)
+            return Vector3.zero;
+
+        // If the current body is the same as the other body, it won't move.
+        if (current.celestialBody == other.celestialBody)
+            return Vector3.zero;
+
+        Vector3 relativePosition = other.position - current.position;
+        float sqrMagnitude = relativePosition.sqrMagnitude;
+
+        // If the other body is too close, it won't move.
+        if (sqrMagnitude < 0.1f)
+            return Vector3.zero;
+
+        float gravity = 9.82f;
+        float attraction = other.mass / sqrMagnitude;
+
+        Vector3 acceleration = gravity * attraction * relativePosition.normalized;
+
+        return acceleration;
     }
 }

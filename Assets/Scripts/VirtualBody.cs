@@ -6,15 +6,18 @@ public class VirtualBody
     public Vector3 velocity;
     public Vector3 position;
     public RigidbodyConstraints constraints;
+    public CelestialBody celestialBody;
 
     public VirtualBody(CelestialBody celestialBody)
     {
         mass = celestialBody.Mass;
 
-        velocity = celestialBody.Velocity;
+        velocity = celestialBody.velocity;
 
         position = celestialBody.Position;
 
         constraints = celestialBody.Constraints;
+
+        this.celestialBody = celestialBody;
     }
 }
