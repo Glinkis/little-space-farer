@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour
     public Camera cameraObject;
     public GameObject target;
 
-    void Update()
+    void FixedUpdate()
     {
         SelectTarget();
         CenterTarget();
@@ -17,8 +17,7 @@ public class CameraController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(ray, out raycastHit, Camera.main.farClipPlane))
+            if (Physics.Raycast(ray, out var raycastHit, Camera.main.farClipPlane))
                 if (raycastHit.transform.gameObject)
                     target = raycastHit.transform.gameObject;
         }
@@ -26,7 +25,7 @@ public class CameraController : MonoBehaviour
 
     void CenterTarget()
     {
-        this.transform.position = Vector3.Slerp(
+        transform.position = Vector3.Slerp(
             transform.position,
             target.transform.position,
             Time.deltaTime * 10
