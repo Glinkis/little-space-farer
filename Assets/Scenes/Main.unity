@@ -1203,5 +1203,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfSteps: 10000
-  timeStep: 0.04
+  timeStep: 0.02
   showWhenPlaying: 1
