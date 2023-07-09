@@ -13,24 +13,24 @@ public class GravityController : MonoBehaviour
     {
         var bodies = FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
 
-        foreach (var current in bodies)
+        for (int i = 0; i < bodies.Length; i++)
         {
             Vector3 acceleration = Vector3.zero;
 
-            foreach (var other in bodies)
+            for (int j = 0; j < bodies.Length; j++)
             {
                 acceleration += CalculateAcceleration(
-                    new VirtualBody(current),
-                    new VirtualBody(other)
+                    new VirtualBody(bodies[i]),
+                    new VirtualBody(bodies[j])
                 );
             }
 
-            current.UpdateVelocity(acceleration, timeStep);
+            bodies[i].UpdateVelocity(acceleration, timeStep);
         }
 
-        foreach (var current in bodies)
+        for (int i = 0; i < bodies.Length; i++)
         {
-            current.UpdatePosition(timeStep);
+            bodies[i].UpdatePosition(timeStep);
         }
     }
 
