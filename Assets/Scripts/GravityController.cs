@@ -52,10 +52,7 @@ public class GravityController : MonoBehaviour
             return Vector3.zero;
 
         float gravity = 9.82f;
-        float attraction = other.mass / sqrMagnitude;
 
-        Vector3 acceleration = gravity * attraction * relativePosition.normalized;
-
-        return acceleration;
+        return gravity * other.mass / sqrMagnitude * relativePosition.normalized;
     }
 }
