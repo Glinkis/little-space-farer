@@ -5,31 +5,16 @@ public class CameraController : MonoBehaviour
     public Camera cameraObject;
     public GameObject target;
 
+    void Update()
+    {
+        transform.position = target.transform.position;
+    }
+
     void FixedUpdate()
     {
-        SelectTarget();
-        CenterTarget();
+        cameraObject.transform.LookAt(target.transform);
+
         RotateWithMouse();
-    }
-
-    void SelectTarget()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out var raycastHit, Camera.main.farClipPlane))
-                if (raycastHit.transform.gameObject)
-                    target = raycastHit.transform.gameObject;
-        }
-    }
-
-    void CenterTarget()
-    {
-        transform.position = Vector3.Slerp(
-            transform.position,
-            target.transform.position,
-            Time.deltaTime * 10
-        );
     }
 
     void RotateWithMouse()
