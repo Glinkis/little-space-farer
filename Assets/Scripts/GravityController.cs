@@ -2,13 +2,6 @@ using UnityEngine;
 
 public class GravityController : MonoBehaviour
 {
-    public float timeStep = 0.01f;
-
-    void Awake()
-    {
-        Time.fixedDeltaTime = timeStep;
-    }
-
     void FixedUpdate()
     {
         var bodies = FindObjectsByType<CelestialBody>(FindObjectsSortMode.None);
@@ -25,12 +18,12 @@ public class GravityController : MonoBehaviour
                 );
             }
 
-            bodies[i].UpdateVelocity(acceleration, timeStep);
+            bodies[i].UpdateVelocity(acceleration, Time.deltaTime);
         }
 
         for (int i = 0; i < bodies.Length; i++)
         {
-            bodies[i].UpdatePosition(timeStep);
+            bodies[i].UpdatePosition(Time.deltaTime);
         }
     }
 
