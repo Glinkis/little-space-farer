@@ -32,13 +32,13 @@ public class Ship : MonoBehaviour
             rigidBody.AddTorque(Camera.main.transform.TransformDirection(torque, 0, 0));
 
         if (Input.GetKey(KeyCode.A))
-            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, torque, 0));
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, 0, torque));
 
         if (Input.GetKey(KeyCode.S))
             rigidBody.AddTorque(Camera.main.transform.TransformDirection(-torque, 0, 0));
 
         if (Input.GetKey(KeyCode.D))
-            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, -torque, 0));
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, 0, -torque));
 
         if (Input.GetKey(KeyCode.Q))
             rigidBody.AddRelativeTorque(0, torque, 0);
