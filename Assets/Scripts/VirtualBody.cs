@@ -5,7 +5,6 @@ public class VirtualBody
     public float mass;
     public Vector3 velocity;
     public Vector3 position;
-    public RigidbodyConstraints constraints;
     public CelestialBody celestialBody;
 
     public VirtualBody(CelestialBody celestialBody)
@@ -15,8 +14,6 @@ public class VirtualBody
         velocity = celestialBody.velocity;
 
         position = celestialBody.Position;
-
-        constraints = celestialBody.Constraints;
 
         this.celestialBody = celestialBody;
     }

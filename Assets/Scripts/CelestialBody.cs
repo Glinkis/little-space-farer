@@ -8,6 +8,7 @@ public class CelestialBody : MonoBehaviour
     public float Mass => rigidBody.mass;
     public Vector3 Position => rigidBody.position;
     public RigidbodyConstraints Constraints => rigidBody.constraints;
+    public CelestialBody[] excludedBodies;
 
     Rigidbody rigidBody;
 

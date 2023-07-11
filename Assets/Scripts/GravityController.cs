@@ -29,13 +29,19 @@ public class GravityController : MonoBehaviour
 
     public static Vector3 CalculateAcceleration(VirtualBody current, VirtualBody other)
     {
-        // If the current body is frozen, it won't move.
-        if (current.constraints == RigidbodyConstraints.FreezePosition)
-            return Vector3.zero;
-
         // If the current body is the same as the other body, it won't move.
         if (current.celestialBody == other.celestialBody)
             return Vector3.zero;
+
+        // If the current body is frozen, it won't move.
+        if (current.celestialBody.Constraints == RigidbodyConstraints.FreezePosition)
+            return Vector3.zero;
+
+        // If the current body explicitly excludes the other body, it won't move.
+        if (current.celestialBody.excludedBodies != null)
+            for (int i = 0; i < current.celestialBody.excludedBodies.Length; i++)
+                if (current.celestialBody.excludedBodies[i] == other.celestialBody)
+                    return Vector3.zero;
 
         Vector3 relativePosition = other.position - current.position;
         float sqrMagnitude = relativePosition.sqrMagnitude;
