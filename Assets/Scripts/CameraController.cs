@@ -30,8 +30,6 @@ public class CameraController : MonoBehaviour
             target.transform.position,
             Time.deltaTime * 10
         );
-
-        cameraObject.transform.LookAt(transform.position);
     }
 
     void RotateWithMouse()

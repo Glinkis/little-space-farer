@@ -21,8 +21,7 @@ public class Ship : MonoBehaviour
         if (Input.GetKey(KeyCode.Space))
         {
             particles.Play();
-            Vector3 thrustDir = transform.TransformVector(0, thrust, 0);
-            rigidBody.AddForce(thrustDir, ForceMode.Acceleration);
+            rigidBody.AddForce(transform.TransformVector(0, thrust, 0), ForceMode.Acceleration);
         }
         else
         {
@@ -30,16 +29,16 @@ public class Ship : MonoBehaviour
         }
 
         if (Input.GetKey(KeyCode.W))
-            rigidBody.AddRelativeTorque(torque, 0, 0);
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(torque, 0, 0));
 
         if (Input.GetKey(KeyCode.A))
-            rigidBody.AddRelativeTorque(0, 0, -torque);
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, torque, 0));
 
         if (Input.GetKey(KeyCode.S))
-            rigidBody.AddRelativeTorque(-torque, 0, 0);
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(-torque, 0, 0));
 
         if (Input.GetKey(KeyCode.D))
-            rigidBody.AddRelativeTorque(0, 0, torque);
+            rigidBody.AddTorque(Camera.main.transform.TransformDirection(0, -torque, 0));
 
         if (Input.GetKey(KeyCode.Q))
             rigidBody.AddRelativeTorque(0, torque, 0);
@@ -56,7 +55,7 @@ public class Ship : MonoBehaviour
             Vector3 relativePosition = bodies[i].Position - transform.position;
             float sqrMagnitude = relativePosition.sqrMagnitude;
 
-            float gravity = 20f;
+            float gravity = 14f;
 
             acceleration += gravity * bodies[i].Mass / sqrMagnitude * relativePosition.normalized;
         }
