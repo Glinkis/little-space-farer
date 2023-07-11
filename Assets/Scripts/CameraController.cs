@@ -5,13 +5,9 @@ public class CameraController : MonoBehaviour
     public Camera cameraObject;
     public GameObject target;
 
-    void Update()
-    {
-        transform.position = target.transform.position;
-    }
-
     void FixedUpdate()
     {
+        transform.position = target.transform.position;
         cameraObject.transform.LookAt(target.transform);
 
         RotateWithMouse();
